@@ -6,10 +6,11 @@ import {
     createAppContainer,
     createStackNavigator,
 } from 'react-navigation';
+import { Icon } from 'native-base';
 
 import TaskListTab from './tabs/TaskListTab';
 import ProfileTab from './tabs/ProfileTab';
-import AddTask from './AddTaskScreen'
+import AddTaskScreen from './AddTaskScreen'
 
 export default class MainScreen extends Component {
     static navigationOptions = {
@@ -20,8 +21,21 @@ export default class MainScreen extends Component {
     }
 }
 
-const MainTabNavigator = createBottomTabNavigator({
+const TaskNavigator = createStackNavigator({
     Tasks: { screen: TaskListTab },
+    AddTask: { screen: AddTaskScreen },
+},
+    {
+        navigationOptions: {
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name='list' style={{ color: tintColor }} />
+            ),
+            header: null,
+        }
+    });
+
+const AppTabNavigator = createBottomTabNavigator({
+    Tasks: { screen: TaskNavigator },
     Profile: { screen: ProfileTab },
 },
     {
@@ -33,18 +47,6 @@ const MainTabNavigator = createBottomTabNavigator({
             showLabel: false,
             showIcon: true,
         }
-    }
-);
-
-const AppTabNavigator = createStackNavigator({
-    MainScreen: { screen: MainTabNavigator },
-    AddTask: { screen: AddTask },
-},
-    {
-        navigationOptions: {
-            tabBarVisible: false
-        }
-    }
-);
+    });
 
 const AppContainer = createAppContainer(AppTabNavigator);

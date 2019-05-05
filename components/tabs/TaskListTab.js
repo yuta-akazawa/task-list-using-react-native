@@ -26,9 +26,6 @@ import Swipeout from 'react-native-swipeout';
 
 export default class TaskListTab extends Component {
     static navigationOptions = {
-        tabBarIcon: ({ tintColor }) => (
-            <Icon name='list' style={{ color: tintColor }} />
-        ),
         header: null,
     }
 
