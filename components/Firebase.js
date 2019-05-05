@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
+import moment from 'moment';
 import Task from './models/Task';
 
 class Firebase {
@@ -21,10 +22,7 @@ class Firebase {
   }
 
   createTask = ({ title, description, limitDate, status }) => {
-    const createdAt = Date.now();
-    console.log(title);
-    console.log(description);
-    console.log(limitDate);
+    const createdAt = moment().format('l');
     this.taskCollection.add({
       title,
       description,
@@ -35,7 +33,9 @@ class Firebase {
   };
 
   getTasks = async () => {
-    const tasklist = await this.taskCollection.get();
+    const tasklist = await this.taskCollection
+      .orderBy('createdAt', 'asc')
+      .get();
     const result = [];
     tasklist.forEach(doc => {
       result.push(new Task(doc));

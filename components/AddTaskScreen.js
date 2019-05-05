@@ -14,7 +14,11 @@ import {
     Item,
     Input,
     DatePicker,
+    Body,
+    Title,
+    H2,
 } from 'native-base';
+import moment from 'moment';
 import Firebase from './Firebase';
 
 export default class AddTaskModalScreen extends Component {
@@ -23,13 +27,14 @@ export default class AddTaskModalScreen extends Component {
         this.state = {
             title: '',
             description: '',
-            limitDate: new Date(),
+            limitDate: moment().format('l'),
             status: false,
         }
         this.setDate = this.setDate.bind(this);
     }
     setDate(newDate) {
-        this.setState({ limitDate: newDate });
+        const limitDate = moment(newDate).format('l');
+        this.setState({ limitDate: limitDate });
     }
 
     async createTask() {
@@ -50,48 +55,48 @@ export default class AddTaskModalScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Container>
-                    <Header>
-                        <Text>Type new Task</Text>
-                    </Header>
-                    <Content>
-                        <Item>
-                            <Input
-                                placeholder='title'
-                                onChangeText={title => this.setState({ title })}
-                            >
-                            </Input>
-                        </Item>
-                        <Item>
-                            <Input
-                                placeholder='description'
-                                onChangeText={(description) => this.setState({ description })}
-                            >
-                            </Input>
-                        </Item>
-                        <Item>
-                            <DatePicker
-                                defaultDate={new Date()}
-                                locale={'jp'}
-                                androidMode={'default'}
-                                animationType={'slide'}
-                                placeHolderText={'Select limit Date'}
-                                onDateChange={this.setDate}
-                                disabled={false}
-                            />
-                        </Item>
-                        <Button
-                            full
-                            rounded
-                            info
-                            onPress={() => this.createTask()}
+            <Container style={styles.container}>
+                <View>
+                    <H2 style={styles.h2}>Type new Task</H2>
+                </View>
+                <Content>
+                    <Item>
+                        <Input
+                            placeholder='title'
+                            onChangeText={title => this.setState({ title })}
                         >
-                            <Text>Add Task</Text>
-                        </Button>
-                    </Content>
-                </Container>
-            </View>
+                        </Input>
+                    </Item>
+                    <Item>
+                        <Input
+                            placeholder='description'
+                            onChangeText={(description) => this.setState({ description })}
+                        >
+                        </Input>
+                    </Item>
+                    <Item>
+                        <DatePicker
+                            defaultDate={new Date()}
+                            locale={'jp'}
+                            androidMode={'default'}
+                            animationType={'slide'}
+                            placeHolderText={'Select limit Date'}
+                            onDateChange={this.setDate}
+                            disabled={false}
+                            textStyle={{ color: '#CCCCCC' }}
+                        />
+                    </Item>
+                    <Button
+                        style={styles.button}
+                        full
+                        rounded
+                        info
+                        onPress={() => this.createTask()}
+                    >
+                        <Text style={styles.buttonText} >Add Task</Text>
+                    </Button>
+                </Content>
+            </Container>
         );
     }
 }
@@ -100,7 +105,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
+    },
+    header: {
+        flex: 1,
+    },
+    button: {
+        margin: 20,
+    },
+    buttonText: {
+        color: '#fff'
+    },
+    datePickerText: {
+        color: '#C0C0C0'
+    },
+    h2: {
         alignItems: 'center',
-        justifyContent: 'center',
+        margin: 10,
     }
 });

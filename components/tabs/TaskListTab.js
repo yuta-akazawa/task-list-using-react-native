@@ -5,7 +5,7 @@ import {
     View,
     Text,
     StyleSheet,
-    SectionList,
+    FlatList,
 } from 'react-native';
 import {
     Icon,
@@ -13,15 +13,22 @@ import {
     Button,
     Content,
     ListItem,
+    Header,
+    Body,
+    Title,
+    Left,
+    Right,
 } from 'native-base';
 import Firebase from '../Firebase';
 import firebase from 'firebase';
+import moment from 'moment';
 
 export default class TaskListTab extends Component {
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
             <Icon name='list' style={{ color: tintColor }} />
-        )
+        ),
+        header: null,
     }
 
     constructor(props) {
@@ -49,9 +56,13 @@ export default class TaskListTab extends Component {
 
     _keyExtractor = (item, index) => index.toString();
     _renderItem(item) {
+        const limitDate = moment(item.limitDate).format('YYYY/MM/DD')
         return (
             <ListItem>
-                <Text>{item.title}</Text>
+                <View>
+                    <Text>{item.title}</Text>
+                    <Text>{limitDate}</Text>
+                </View>
             </ListItem>
         );
     }
@@ -61,20 +72,22 @@ export default class TaskListTab extends Component {
     }
 
     render() {
-
         this.getTaskList();
-
         return (
-            <Container>
+            <Container style={styles.container}>
+                <Header>
+                    <Left />
+                    <Body>
+                        <Title>Task List</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 {/* List */}
-                <Content>
-                    <SectionList
-                        sections={[{ title: 'Section1', data: this.state.tasklist }]}
+                <Content padder>
+                    <FlatList
+                        data={this.state.tasklist}
                         keyExtractor={this._keyExtractor}
                         renderItem={({ item }) => this._renderItem(item)}
-                        renderSectionHeader={({ section: { title } }) => (
-                            <Text>{title}</Text>
-                        )}
                     />
                 </Content>
                 {/** Button */}
@@ -95,8 +108,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     header: {
         alignItems: 'center',
