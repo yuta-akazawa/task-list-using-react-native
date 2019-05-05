@@ -25,7 +25,7 @@ class Firebase {
     const uuid = require('uuid/v4');;
     const id = uuid();
     const createdAt = moment().format('l');
-    this.taskCollection.add({
+    this.taskCollection.doc(id).set({
       title,
       description,
       limitDate,
@@ -33,6 +33,12 @@ class Firebase {
       id,
       createdAt
     });
+  };
+
+  deleteById = async id => {
+    const delDoc = this.taskCollection.doc(id);
+    if (!delDoc) return;
+    return await delDoc.delete();
   };
 
   getTasks = async () => {
@@ -44,7 +50,7 @@ class Firebase {
       result.push(new Task(doc));
     });
     return result;
-  }
+  };
 
 
   // Helpers

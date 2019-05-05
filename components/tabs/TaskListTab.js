@@ -22,6 +22,7 @@ import {
 import Firebase from '../Firebase';
 import firebase from 'firebase';
 import moment from 'moment';
+import Swipeout from 'react-native-swipeout';
 
 export default class TaskListTab extends Component {
     static navigationOptions = {
@@ -54,16 +55,31 @@ export default class TaskListTab extends Component {
         this.setState({ tasklist });
     }
 
+    async deleteTask(item) {
+        await Firebase.shared.deleteById(item.id);
+    }
+
     _keyExtractor = (item, index) => index.toString();
     _renderItem(item) {
         const limitDate = moment(item.limitDate).format('YYYY/MM/DD')
+        const swipeBtns = [{
+            type: 'delete',
+            text: 'Delete',
+            onPress: () => { this.deleteTask(item) }
+        }]
+
         return (
-            <ListItem>
-                <View>
-                    <Text>{item.title}</Text>
-                    <Text>{limitDate}</Text>
-                </View>
-            </ListItem>
+            <Swipeout
+                style={styles.listitem}
+                right={swipeBtns}
+            >
+                <ListItem>
+                    <View>
+                        <Text>{item.title}</Text>
+                        <Text>{limitDate}</Text>
+                    </View>
+                </ListItem>
+            </Swipeout>
         );
     }
 
@@ -124,6 +140,9 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginLeft: 'auto',
         marginRight: 30,
+    },
+    listitem: {
+        backgroundColor: '#fff'
     }
 
 });
