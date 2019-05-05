@@ -22,12 +22,15 @@ class Firebase {
   }
 
   createTask = ({ title, description, limitDate, status }) => {
+    const uuid = require('uuid/v4');;
+    const id = uuid();
     const createdAt = moment().format('l');
     this.taskCollection.add({
       title,
       description,
       limitDate,
       status,
+      id,
       createdAt
     });
   };
