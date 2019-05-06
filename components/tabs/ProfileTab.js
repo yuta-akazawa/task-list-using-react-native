@@ -6,7 +6,7 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
-import { Icon, Container, Header, Body, Title } from 'native-base';
+import { Icon, Container, Header, Body, Title, Content, Button } from 'native-base';
 
 export default class ProfileTab extends Component {
     static navigationOptions = {
@@ -24,6 +24,17 @@ export default class ProfileTab extends Component {
                         <Title>Task List</Title>
                     </Body>
                 </Header>
+                <Content>
+                    <View>
+                        <Text>Profile</Text>
+                    </View>
+                    <Button
+                        full
+                        info
+                    >
+                        <Text>Logout</Text>
+                    </Button>
+                </Content>
             </Container>
         );
     }

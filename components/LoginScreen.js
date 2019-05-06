@@ -14,12 +14,18 @@ import {
     Item,
     Button,
     Label,
+    Body,
+    Title,
 } from "native-base";
 
 import Firebase from './Firebase';
 import firebase from 'firebase';
 
 export default class LoginScreen extends Component {
+    static navigationOptions = {
+        header: null,
+    }
+
     constructor(props) {
         super(props);
 

@@ -17,11 +17,17 @@ import {
     Body,
     Title,
     H2,
+    Left,
+    Icon,
+    Right,
 } from 'native-base';
 import moment from 'moment';
 import Firebase from './Firebase';
 
 export default class AddTaskModalScreen extends Component {
+    static navigationOptions = {
+        header: null,
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -51,11 +57,28 @@ export default class AddTaskModalScreen extends Component {
         } else {
             alert('Title is empty, Please type Title.');
         }
-    }
+    };
+
+    back() {
+        this.props.navigation.goBack();
+    };
 
     render() {
         return (
             <Container style={styles.container}>
+                <Header style={styles.header}>
+                    <Left>
+                        <Button transparent
+                            onPress={() => this.back()}>
+                            <Icon name='arrow-back' />
+                            <Text style={styles.headerButtonText}>Back</Text>
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Task List</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 <View>
                     <H2 style={styles.h2}>Type new Task</H2>
                 </View>
@@ -109,16 +132,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     header: {
-        flex: 1,
+        alignItems: 'center',
     },
-    button: {
-        margin: 20,
+    headerButtonText: {
+        color: 'blue',
     },
     buttonText: {
         color: '#fff'
-    },
-    datePickerText: {
-        color: '#C0C0C0'
     },
     h2: {
         alignItems: 'center',

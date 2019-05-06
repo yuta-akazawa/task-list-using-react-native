@@ -8,7 +8,7 @@ import MainScreen from './components/MainScreen';
 import LoginScreen from './components/LoginScreen';
 
 const AppStackNavigator = createStackNavigator({
-  // Login: { screen: LoginScreen },
+  Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
 },
   {
