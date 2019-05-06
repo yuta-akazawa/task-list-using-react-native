@@ -20,7 +20,7 @@ import Firebase from '../Firebase';
 
 export default class ProfileTab extends Component {
     static navigationOptions = {
-        title: 'A',
+        title: 'Profile',
         tabBarIcon: ({ tintColor }) => (
             <Icon name='person' style={{ color: tintColor }} />
         )

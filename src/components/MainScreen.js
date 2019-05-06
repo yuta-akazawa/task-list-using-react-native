@@ -32,6 +32,7 @@ const TaskNavigator = createStackNavigator({
                 <Icon name='list' style={{ color: tintColor }} />
             ),
             header: null,
+            title: 'List'
         }
     });
 
@@ -45,7 +46,7 @@ const AppTabNavigator = createBottomTabNavigator({
         tabBarOptions: {
             activeTintColor: '#000',
             inactiveTintColor: '#d1cece',
-            showLabel: false,
+            showLabel: true,
             showIcon: true,
         },
         navigationOptions: {
