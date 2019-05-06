@@ -42,7 +42,6 @@ class Firebase {
   };
 
   logout = async () => {
-    console.log(' firebaselogout ')
     try {
       const res = await firebase.auth().signOut();
     } catch (error) {
