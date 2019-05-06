@@ -7,19 +7,13 @@ import {
 } from "react-native";
 import {
     Container,
-    Content,
-    Header,
     Form,
     Input,
     Item,
     Button,
     Label,
-    Body,
-    Title,
 } from "native-base";
-
 import Firebase from './Firebase';
-import firebase from 'firebase';
 
 export default class LoginScreen extends Component {
     static navigationOptions = {
@@ -35,40 +29,22 @@ export default class LoginScreen extends Component {
         })
     }
 
-    _signUpUser() {
+    async _signUpUser() {
         const { email, password } = this.state;
-        try {
-            if (this.state.password.length < 6) {
-                alert('Please enter at least 6 characters');
-                return;
-            }
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(response => {
-                    this.props.navigation.navigate('Main');
-                })
-                .catch(error => {
-                    alert(error.message);
-                });
-        } catch (error) {
-            console.error(error);
+        if (password.length < 6) {
+            alert('Please enter at least 6 characters');
+            return;
         }
-
+        const res = await Firebase.shared.signUp(email, password);
+        if (!res) return;
+        this.props.navigation.navigate('Main');
     }
 
-    _loginUser() {
+    async _loginUser() {
         const { email, password } = this.state;
-        try {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(response => {
-                    this.props.navigation.navigate('Main');
-                })
-                .catch(error => {
-                    alert(error.message);
-                })
-        } catch (error) {
-            console.error(error);
-        }
-
+        const res = await Firebase.shared.login(email, password);
+        if (!res) return;
+        this.props.navigation.navigate('Main');
     }
 
     render() {

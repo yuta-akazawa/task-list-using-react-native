@@ -11,6 +11,7 @@ import { Icon } from 'native-base';
 import TaskListTab from './tabs/TaskListTab';
 import ProfileTab from './tabs/ProfileTab';
 import AddTaskScreen from './AddTaskScreen'
+import LoginScreen from './LoginScreen';
 
 export default class MainScreen extends Component {
     static navigationOptions = {
@@ -46,7 +47,20 @@ const AppTabNavigator = createBottomTabNavigator({
             inactiveTintColor: '#d1cece',
             showLabel: false,
             showIcon: true,
+        },
+        navigationOptions: {
+            header: null,
         }
     });
 
-const AppContainer = createAppContainer(AppTabNavigator);
+const MainNavigator = createStackNavigator({
+    Login: { screen: LoginScreen },
+    Main: { screen: AppTabNavigator }
+},
+    {
+        navigationOptions: {
+            header: null,
+        }
+    });
+
+const AppContainer = createAppContainer(MainNavigator);

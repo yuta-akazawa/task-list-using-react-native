@@ -7,6 +7,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { Icon, Container, Header, Body, Title, Content, Button } from 'native-base';
+import Firebase from './../Firebase';
 
 export default class ProfileTab extends Component {
     static navigationOptions = {
@@ -14,6 +15,13 @@ export default class ProfileTab extends Component {
         tabBarIcon: ({ tintColor }) => (
             <Icon name='person' style={{ color: tintColor }} />
         )
+    }
+
+    async _logout() {
+        console.log('logout')
+        const res = await Firebase.shared.logout();
+        if (!res) return;
+        this.props.navigation.navigate('Login');
     }
 
     render() {
@@ -31,6 +39,7 @@ export default class ProfileTab extends Component {
                     <Button
                         full
                         info
+                        onPress={() => { this._logout() }}
                     >
                         <Text>Logout</Text>
                     </Button>

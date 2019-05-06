@@ -21,6 +21,37 @@ class Firebase {
     });
   }
 
+  signUp = async (email, password) => {
+    try {
+      const res = await firebase.auth().createUserWithEmailAndPassword(email, password)
+    } catch (error) {
+      alert(error);
+      return false;
+    }
+    return true;
+  };
+
+  login = async (email, password) => {
+    try {
+      const res = await firebase.auth().signInWithEmailAndPassword(email, password)
+    } catch (error) {
+      alert(error);
+      return false;
+    }
+    return true;
+  };
+
+  logout = async () => {
+    console.log(' firebaselogout ')
+    try {
+      const res = await firebase.auth().signOut();
+    } catch (error) {
+      alert(error);
+      return false;
+    }
+    return true;
+  };
+
   createTask = ({ title, description, limitDate, status }) => {
     const uuid = require('uuid/v4');;
     const id = uuid();
@@ -53,7 +84,6 @@ class Firebase {
   };
 
 
-  // Helpers
   get userCollection() {
     return firebase.firestore().collection("users");
   }
